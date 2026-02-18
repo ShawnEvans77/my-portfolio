@@ -339,7 +339,7 @@ export default function App() {
               maxWidth: "480px",
               marginBottom: "3rem",
             }}>
-              Recent computer science graduate passionate about educating the next generation of engineers.
+              Recent computer science graduate passionate about educating the next generation of engineers. Proven track record of helping students succeed academically.
             </p>
 
             <div style={{ display: "flex", gap: "2rem", flexWrap: "wrap", justifyContent: "center" }}>
