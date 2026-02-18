@@ -314,7 +314,7 @@ export default function App() {
               color: "#c8b98a",
               marginBottom: "1.75rem",
             }}>
-              cs tutor @ brooklyn college
+              java tutor @ brooklyn college
             </p>
 
             <h1 style={{
