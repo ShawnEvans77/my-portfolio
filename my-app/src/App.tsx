@@ -68,6 +68,12 @@ const experience = [
   },
 ];
 
+const socialLinks = [
+  { label: "GitHub", href: "https://github.com/ShawnEvans77", color: "#f0ede6", bg: "rgba(240,237,230,0.1)", border: "rgba(240,237,230,0.35)" },
+  { label: "LinkedIn", href: "https://linkedin.com/in/shawn85", color: "#7eb8d4", bg: "rgba(126,184,212,0.1)", border: "rgba(126,184,212,0.45)" },
+  { label: "Email", href: "mailto:shawnevans328@gmail.com", color: "#c8b98a", bg: "rgba(200,185,138,0.1)", border: "rgba(200,185,138,0.45)" },
+];
+
 function useInView(threshold = 0.1) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
@@ -271,6 +277,7 @@ function ProjectCard({
 
 export default function App() {
   const [loaded, setLoaded] = useState(false);
+  const [hoveredLink, setHoveredLink] = useState<string | null>(null);
   const { ref: expRef, visible: expVisible } = useInView();
   const { ref: contactRef, visible: contactVisible } = useInView();
 
@@ -306,7 +313,6 @@ export default function App() {
 
         a:hover { opacity: 0.8; }
 
-        /* Experience grid: two-column on desktop, stacked on mobile */
         .exp-row {
           display: grid;
           grid-template-columns: 220px 1fr;
@@ -315,7 +321,6 @@ export default function App() {
           padding: 2.5rem 0;
         }
 
-        /* Skills grid */
         .skills-grid {
           display: flex;
           gap: 4rem;
@@ -392,21 +397,22 @@ export default function App() {
             justifyContent: "center",
             alignItems: "center",
             textAlign: "center",
-            padding:
-              "clamp(6rem, 12vw, 9rem) clamp(1.5rem, 6vw, 6rem)",
+            padding: "clamp(6rem, 12vw, 9rem) clamp(1.5rem, 6vw, 6rem)",
             position: "relative",
             overflow: "hidden",
           }}
         >
-          {/* Subtle grid texture */}
+          {/* Grid texture — more visible */}
           <div
             style={{
               position: "absolute",
               inset: 0,
               backgroundImage:
-                "linear-gradient(rgba(200,185,138,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(200,185,138,0.03) 1px, transparent 1px)",
+                "linear-gradient(rgba(200,185,138,0.09) 1px, transparent 1px), linear-gradient(90deg, rgba(200,185,138,0.09) 1px, transparent 1px)",
               backgroundSize: "64px 64px",
               pointerEvents: "none",
+              maskImage: "radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%)",
+              WebkitMaskImage: "radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%)",
             }}
           />
 
@@ -497,46 +503,35 @@ export default function App() {
               students succeed academically.
             </p>
 
+            {/* Vibrant social link buttons */}
             <div
               style={{
                 display: "flex",
-                gap: "2rem",
+                gap: "0.75rem",
                 flexWrap: "wrap",
                 justifyContent: "center",
               }}
             >
-              {[
-                { label: "GitHub", href: "https://github.com/ShawnEvans77" },
-                {
-                  label: "LinkedIn",
-                  href: "https://linkedin.com/in/shawn85",
-                },
-                {
-                  label: "Email",
-                  href: "mailto:shawnevans328@gmail.com",
-                },
-              ].map((link) => (
+              {socialLinks.map((link) => (
                 <a
                   key={link.label}
                   href={link.href}
                   target={link.href.startsWith("http") ? "_blank" : undefined}
                   rel="noopener noreferrer"
+                  onMouseEnter={() => setHoveredLink(link.label)}
+                  onMouseLeave={() => setHoveredLink(null)}
                   style={{
                     fontFamily: "'DM Mono', monospace",
-                    fontSize: "clamp(0.78rem, 1.5vw, 0.88rem)",
+                    fontSize: "clamp(0.72rem, 1.4vw, 0.82rem)",
                     letterSpacing: "0.15em",
                     textTransform: "uppercase",
-                    color: "rgba(240,237,230,0.45)",
+                    color: hoveredLink === link.label ? "#0d0c0b" : link.color,
                     textDecoration: "none",
-                    transition: "color 0.2s ease",
-                    padding: "0.5rem 0",
+                    padding: "0.6rem 1.4rem",
+                    border: `1px solid ${link.border}`,
+                    backgroundColor: hoveredLink === link.label ? link.color : link.bg,
+                    transition: "background-color 0.2s ease, color 0.2s ease",
                   }}
-                  onMouseEnter={(e) =>
-                    (e.currentTarget.style.color = "#c8b98a")
-                  }
-                  onMouseLeave={(e) =>
-                    (e.currentTarget.style.color = "rgba(240,237,230,0.45)")
-                  }
                 >
                   {link.label}
                 </a>
@@ -548,8 +543,7 @@ export default function App() {
         {/* Projects */}
         <section
           style={{
-            padding:
-              "clamp(4rem, 8vw, 7rem) clamp(1.5rem, 6vw, 6rem)",
+            padding: "clamp(4rem, 8vw, 7rem) clamp(1.5rem, 6vw, 6rem)",
             borderTop: "1px solid rgba(255,255,255,0.08)",
           }}
         >
@@ -593,8 +587,7 @@ export default function App() {
         <section
           ref={expRef}
           style={{
-            padding:
-              "clamp(4rem, 8vw, 7rem) clamp(1.5rem, 6vw, 6rem)",
+            padding: "clamp(4rem, 8vw, 7rem) clamp(1.5rem, 6vw, 6rem)",
             borderTop: "1px solid rgba(255,255,255,0.08)",
             opacity: expVisible ? 1 : 0,
             transform: expVisible ? "translateY(0)" : "translateY(28px)",
@@ -719,8 +712,7 @@ export default function App() {
         {/* Skills */}
         <section
           style={{
-            padding:
-              "clamp(3.5rem, 7vw, 6rem) clamp(1.5rem, 6vw, 6rem)",
+            padding: "clamp(3.5rem, 7vw, 6rem) clamp(1.5rem, 6vw, 6rem)",
             borderTop: "1px solid rgba(255,255,255,0.08)",
             backgroundColor: "rgba(200,185,138,0.025)",
             textAlign: "center",
@@ -784,8 +776,7 @@ export default function App() {
         <footer
           ref={contactRef}
           style={{
-            padding:
-              "clamp(5rem, 10vw, 8rem) clamp(1.5rem, 6vw, 6rem)",
+            padding: "clamp(5rem, 10vw, 8rem) clamp(1.5rem, 6vw, 6rem)",
             borderTop: "1px solid rgba(255,255,255,0.08)",
             opacity: contactVisible ? 1 : 0,
             transform: contactVisible ? "translateY(0)" : "translateY(24px)",
