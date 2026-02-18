@@ -210,31 +210,60 @@ function ProjectCard({
         style={{
           marginTop: "1.4rem",
           display: "flex",
+          flexWrap: "wrap",
           alignItems: "center",
-          gap: "0.5rem",
+          gap: "1.5rem",
         }}
       >
-        <a
-          href={project.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{
-            fontFamily: "'DM Mono', monospace",
-            fontSize: "0.78rem",
-            letterSpacing: "0.12em",
-            textTransform: "uppercase",
-            color: "#c8b98a",
-            textDecoration: "none",
-            borderBottom: "1px solid rgba(200,185,138,0.4)",
-            paddingBottom: "1px",
-            transition: "border-color 0.2s ease, color 0.2s ease",
-          }}
-        >
-          View on GitHub
-        </a>
-        <span style={{ color: "rgba(200,185,138,0.5)", fontSize: "0.8rem" }}>
-          &#8594;
-        </span>
+        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+          <a
+            href={project.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              fontFamily: "'DM Mono', monospace",
+              fontSize: "0.78rem",
+              letterSpacing: "0.12em",
+              textTransform: "uppercase",
+              color: "#c8b98a",
+              textDecoration: "none",
+              borderBottom: "1px solid rgba(200,185,138,0.4)",
+              paddingBottom: "1px",
+              transition: "border-color 0.2s ease, color 0.2s ease",
+            }}
+          >
+            View on GitHub
+          </a>
+          <span style={{ color: "rgba(200,185,138,0.5)", fontSize: "0.8rem" }}>
+            &#8594;
+          </span>
+        </div>
+
+        {project.slug === "marnie" && (
+          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+            <a
+              href="https://discord.com/oauth2/authorize?client_id=1455036822014001168&permissions=68608&integration_type=0&scope=bot"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                fontFamily: "'DM Mono', monospace",
+                fontSize: "0.78rem",
+                letterSpacing: "0.12em",
+                textTransform: "uppercase",
+                color: "#8ab4c8",
+                textDecoration: "none",
+                borderBottom: "1px solid rgba(138,180,200,0.4)",
+                paddingBottom: "1px",
+                transition: "border-color 0.2s ease, color 0.2s ease",
+              }}
+            >
+              Add to Server
+            </a>
+            <span style={{ color: "rgba(138,180,200,0.5)", fontSize: "0.8rem" }}>
+              &#8594;
+            </span>
+          </div>
+        )}
       </div>
     </div>
   );
