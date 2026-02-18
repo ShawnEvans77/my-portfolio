@@ -31,6 +31,7 @@ const experience = [
     period: "Sep 2025 - Present",
     bullets: [
       "Enhanced students' understanding of Java concepts through creative tutoring sessions that focused on algorithmic thinking rather than rote syntax memorization.",
+      "Demystified common programming patterns using focused one-on-one guidance, robust whiteboard demonstrations, and informational lectures. Easily managed high attendance sessions by donating an equal amount of time to all students irregardless of their skill level."
     ],
   },
   {
@@ -50,6 +51,7 @@ const experience = [
     period: "Aug 2024 - May 2025",
     bullets: [
       "Supported the mental, social, and academic well being of a cohort comprised of STEM students as part of a broader effort to improve CUNY graduation rates.",
+      "Provided mentees with much needed socialization during nightly online conversations and in-person study sessions, with talks ranging from academic struggles to personal life aspirations.",
     ],
   },
   {
