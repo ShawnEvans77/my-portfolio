@@ -821,31 +821,22 @@ export default function App() {
               together.
             </span>
           </h2>
-          <a
-            href="mailto:shawnevans328@gmail.com"
+          <span
             style={{
               fontFamily: "'DM Mono', monospace",
               fontSize: "clamp(0.78rem, 1.6vw, 0.88rem)",
               letterSpacing: "0.12em",
               textTransform: "uppercase",
               color: "#f0ede6",
-              textDecoration: "none",
               border: "1px solid rgba(240,237,230,0.25)",
               padding: "0.9rem 2rem",
               display: "inline-block",
-              transition: "border-color 0.25s ease, color 0.25s ease",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = "#c8b98a";
-              e.currentTarget.style.color = "#c8b98a";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = "rgba(240,237,230,0.25)";
-              e.currentTarget.style.color = "#f0ede6";
+              userSelect: "all",
+              cursor: "text",
             }}
           >
             shawnevans328@gmail.com
-          </a>
+          </span>
 
           <div
             style={{
