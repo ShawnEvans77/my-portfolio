@@ -540,6 +540,201 @@ export default function App() {
           </div>
         </section>
 
+        {/* Education */}
+        <section
+          style={{
+            padding: "clamp(4rem, 8vw, 7rem) clamp(1.5rem, 6vw, 6rem)",
+            borderTop: "1px solid rgba(255,255,255,0.08)",
+          }}
+        >
+          <div
+            style={{
+              marginBottom: "3.5rem",
+              display: "flex",
+              alignItems: "center",
+              gap: "1.5rem",
+            }}
+          >
+            <h2
+              style={{
+                fontFamily: "'Playfair Display', serif",
+                fontSize: "clamp(2.2rem, 5vw, 3.2rem)",
+                fontWeight: 700,
+                letterSpacing: "-0.025em",
+                color: "#f0ede6",
+              }}
+            >
+              Education
+            </h2>
+            <div
+              style={{
+                flex: 1,
+                height: "1px",
+                backgroundColor: "rgba(255,255,255,0.1)",
+                maxWidth: "300px",
+              }}
+            />
+          </div>
+
+          <div className="exp-row" style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}>
+            {/* Left col */}
+            <div style={{ paddingTop: "0.15rem" }}>
+              <p
+                style={{
+                  fontFamily: "'DM Mono', monospace",
+                  fontSize: "clamp(0.72rem, 1.4vw, 0.8rem)",
+                  letterSpacing: "0.12em",
+                  textTransform: "uppercase",
+                  color: "#c8b98a",
+                  marginBottom: "0.9rem",
+                }}
+              >
+                Aug 2021 – May 2025
+              </p>
+              {/* College name — large and prominent */}
+              <p
+                style={{
+                  fontFamily: "'Playfair Display', serif",
+                  fontSize: "clamp(1.6rem, 3.2vw, 2.2rem)",
+                  fontWeight: 700,
+                  color: "#f0ede6",
+                  lineHeight: 1.15,
+                  letterSpacing: "-0.02em",
+                  marginBottom: "0.4rem",
+                }}
+              >
+                Brooklyn<br />
+                <span style={{ fontStyle: "italic", fontWeight: 400, color: "#c8b98a" }}>College</span>
+              </p>
+              <p
+                style={{
+                  fontFamily: "'DM Mono', monospace",
+                  fontSize: "clamp(0.72rem, 1.3vw, 0.78rem)",
+                  color: "rgba(240,237,230,0.35)",
+                  letterSpacing: "0.06em",
+                }}
+              >
+                Brooklyn, NY
+              </p>
+            </div>
+
+            {/* Right col */}
+            <div style={{ paddingTop: "0.15rem" }}>
+              <p
+                style={{
+                  fontFamily: "'Playfair Display', serif",
+                  fontSize: "clamp(1.05rem, 2vw, 1.2rem)",
+                  fontWeight: 700,
+                  color: "#f0ede6",
+                  marginBottom: "0.6rem",
+                  lineHeight: 1.3,
+                }}
+              >
+                Bachelor of Science in Computer Science
+              </p>
+
+              <div style={{ display: "flex", alignItems: "baseline", gap: "0.75rem", marginBottom: "2rem" }}>
+                <span
+                  style={{
+                    fontFamily: "'DM Mono', monospace",
+                    fontSize: "0.78rem",
+                    letterSpacing: "0.1em",
+                    textTransform: "uppercase",
+                    color: "rgba(240,237,230,0.4)",
+                  }}
+                >
+                  GPA
+                </span>
+                <span
+                  style={{
+                    fontFamily: "'Playfair Display', serif",
+                    fontSize: "clamp(1.6rem, 3vw, 2.2rem)",
+                    fontWeight: 700,
+                    color: "#c8b98a",
+                    letterSpacing: "-0.02em",
+                    lineHeight: 1,
+                  }}
+                >
+                  3.486
+                </span>
+              </div>
+
+              <p
+                style={{
+                  fontFamily: "'DM Mono', monospace",
+                  fontSize: "0.72rem",
+                  letterSpacing: "0.14em",
+                  textTransform: "uppercase",
+                  color: "rgba(240,237,230,0.28)",
+                  marginBottom: "0.7rem",
+                }}
+              >
+                Relevant Coursework
+              </p>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", marginBottom: "2rem" }}>
+                {[
+                  "Data Structures",
+                  "Algorithms",
+                  "Operating Systems",
+                  "Database Systems",
+                  "Software Engineering",
+                  "Computer Architecture",
+                  "Discrete Mathematics",
+                ].map((course) => (
+                  <span
+                    key={course}
+                    style={{
+                      fontFamily: "'DM Mono', monospace",
+                      fontSize: "0.75rem",
+                      letterSpacing: "0.08em",
+                      color: "rgba(240,237,230,0.5)",
+                      border: "1px solid rgba(240,237,230,0.12)",
+                      padding: "0.25rem 0.65rem",
+                      borderRadius: "2px",
+                    }}
+                  >
+                    {course}
+                  </span>
+                ))}
+              </div>
+
+              <p
+                style={{
+                  fontFamily: "'DM Mono', monospace",
+                  fontSize: "0.72rem",
+                  letterSpacing: "0.14em",
+                  textTransform: "uppercase",
+                  color: "rgba(240,237,230,0.28)",
+                  marginBottom: "0.7rem",
+                }}
+              >
+                Activities
+              </p>
+              <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
+                {[
+                  "Black & Latino Male Initiative",
+                  "Computer Science Club",
+                ].map((activity) => (
+                  <div key={activity} style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+                    <span style={{ color: "#c8b98a", fontFamily: "'DM Mono', monospace", fontSize: "0.75rem", flexShrink: 0 }}>&#8212;</span>
+                    <span
+                      style={{
+                        fontFamily: "'Lora', serif",
+                        fontSize: "clamp(0.95rem, 1.8vw, 1.05rem)",
+                        color: "rgba(240,237,230,0.6)",
+                        lineHeight: 1.5,
+                      }}
+                    >
+                      {activity}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }} />
+        </section>
+
         {/* Projects */}
         <section
           style={{
