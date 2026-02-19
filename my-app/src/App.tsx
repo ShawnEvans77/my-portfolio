@@ -174,7 +174,6 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           fontSize: "clamp(1.05rem, 2.2vw, 1.15rem)",
           lineHeight: 1.8,
           color: "rgba(240,237,230,0.7)",
-          maxWidth: "660px",
           marginBottom: "1.4rem",
         }}
       >
@@ -312,7 +311,6 @@ function ExperienceCard({ exp, index }: { exp: Experience; index: number }) {
           display: "flex",
           flexDirection: "column",
           gap: "0.85rem",
-          maxWidth: "760px",
           marginBottom: "1.75rem",
         }}
       >
