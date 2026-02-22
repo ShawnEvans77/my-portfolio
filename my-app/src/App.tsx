@@ -2,6 +2,17 @@ import { useState, useEffect, useRef } from "react";
 
 const projects = [
   {
+    slug: "maple",
+    title: "maple",
+    tech: ["React.js", "TailwindCSS", "TypeScript", "Vercel"],
+    description:
+      "A comprehensive learning platform designed for Brooklyn College Computer Science students. It streamlines access to study materials, course resources, and peer-to-peer knowledge sharing in a centralized, high-performance web environment.",
+    url: "https://github.com/ShawnEvans77", 
+    liveUrl: "https://cisc-1115.vercel.app/",
+    year: "2025",
+    tag: "Learning Platform",
+  },
+  {
     slug: "marnie",
     title: "marnie",
     tech: ["Python", "Docker", "Flask", "Pandas", "REST APIs", "Render"],
@@ -94,7 +105,7 @@ function useInView(threshold = 0.1) {
     );
     obs.observe(el);
     return () => obs.disconnect();
-  }, []);
+  }, [threshold]);
   return { ref, visible };
 }
 
@@ -128,7 +139,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       >
         <div style={{ display: "flex", alignItems: "baseline", gap: "1.25rem", flexWrap: "wrap" }}>
           <a
-            href={project.url}
+            href={project.liveUrl || project.url}
             target="_blank"
             rel="noopener noreferrer"
             style={{
@@ -242,6 +253,29 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
               Add to Server
             </a>
             <span style={{ color: "rgba(138,180,200,0.5)", fontSize: "0.8rem" }}>&#8594;</span>
+          </div>
+        )}
+
+        {project.liveUrl && (
+          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+            <a
+              href={project.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                fontFamily: "'DM Mono', monospace",
+                fontSize: "0.78rem",
+                letterSpacing: "0.12em",
+                textTransform: "uppercase",
+                color: "#7eb8d4",
+                textDecoration: "none",
+                borderBottom: "1px solid rgba(126,184,212,0.4)",
+                paddingBottom: "1px",
+              }}
+            >
+              Live Platform
+            </a>
+            <span style={{ color: "rgba(126,184,212,0.5)", fontSize: "0.8rem" }}>&#8594;</span>
           </div>
         )}
       </div>
@@ -467,10 +501,7 @@ export default function App() {
             <div style={{ flex: 1, height: "1px", backgroundColor: "rgba(255,255,255,0.1)", maxWidth: "300px" }} />
           </div>
 
-          {/* Education Card — full-width, consistent with Experience/Project cards */}
           <div style={{ borderTop: "1px solid rgba(255,255,255,0.12)", padding: "2.5rem 0" }}>
-
-            {/* Header row: school name + period */}
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "0.75rem", marginBottom: "0.6rem" }}>
               <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(2rem, 5vw, 2.8rem)", fontWeight: 700, color: "#f0ede6", letterSpacing: "-0.02em", lineHeight: 1.05, margin: 0 }}>
                 Brooklyn <span style={{ fontStyle: "italic", fontWeight: 400, color: "#c8b98a" }}>College</span>
@@ -480,7 +511,6 @@ export default function App() {
               </span>
             </div>
 
-            {/* Degree + GPA inline */}
             <div style={{ display: "flex", alignItems: "baseline", gap: "2rem", flexWrap: "wrap", marginBottom: "2rem" }}>
               <p style={{ fontFamily: "'Lora', serif", fontSize: "clamp(1rem, 1.8vw, 1.08rem)", color: "rgba(240,237,230,0.65)", lineHeight: 1.5 }}>
                 Bachelor of Science in Computer Science
@@ -491,7 +521,6 @@ export default function App() {
               </div>
             </div>
 
-            {/* Coursework */}
             <p style={{ fontFamily: "'DM Mono', monospace", fontSize: "0.72rem", letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(240,237,230,0.28)", marginBottom: "0.7rem" }}>
               Relevant Coursework
             </p>
@@ -503,7 +532,6 @@ export default function App() {
               ))}
             </div>
 
-            {/* Activities */}
             <p style={{ fontFamily: "'DM Mono', monospace", fontSize: "0.72rem", letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(240,237,230,0.28)", marginBottom: "0.85rem" }}>
               Activities
             </p>
@@ -516,7 +544,6 @@ export default function App() {
               ))}
             </div>
 
-            {/* Footer tag */}
             <div style={{ display: "flex", alignItems: "center", gap: "0.55rem", flexWrap: "wrap" }}>
               <span style={{ fontFamily: "'DM Mono', monospace", fontSize: "0.78rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "#c8b98a", border: "1px solid rgba(200,185,138,0.35)", padding: "0.3rem 0.75rem", borderRadius: "2px" }}>
                 Brooklyn College
@@ -564,8 +591,8 @@ export default function App() {
           <div className="skills-grid">
             {[
               { label: "Languages", items: ["C", "C++", "Java", "JavaScript", "TypeScript", "Python", "SQL"] },
-              { label: "Libraries", items: ["React.js", "Pandas", "PyPDF", "Pygame"] },
-              { label: "Tools", items: ["Docker", "Flask", "Git", "SQLite", "Render"] },
+              { label: "Libraries", items: ["React.js", "TailwindCSS", "Pandas", "PyPDF", "Pygame"] },
+              { label: "Tools", items: ["Docker", "Flask", "Git", "SQLite", "Render", "Vercel"] },
             ].map((group) => (
               <div key={group.label} style={{ minWidth: "120px" }}>
                 <p style={{ fontFamily: "'DM Mono', monospace", fontSize: "clamp(0.72rem, 1.5vw, 0.82rem)", letterSpacing: "0.18em", textTransform: "uppercase", color: "#c8b98a", marginBottom: "1.25rem" }}>{group.label}</p>
