@@ -6,7 +6,7 @@ const projects = [
     title: "maple",
     tech: ["React.js", "TailwindCSS", "TypeScript", "Vercel"],
     description:
-      "A comprehensive learning platform designed for Brooklyn College Computer Science students. It streamlines access to study materials, course resources, and peer-to-peer knowledge sharing in a centralized, high-performance web environment.",
+      "Designed a platform for Brooklyn College Computer Science students that lets them access useful study materials easily without having to shift through dated materials.",
     url: "https://github.com/ShawnEvans77", 
     liveUrl: "https://cisc-1115.vercel.app/",
     year: "2025",
