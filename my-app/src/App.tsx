@@ -51,8 +51,8 @@ const experience = [
     location: "Brooklyn, NY",
     period: "Aug 2024 - May 2025",
     bullets: [
-      "Improved student grades by supplementing faculty instruction of two undergraduate Java classes. Created passionate students excited about course material by periodically hosting fun study sessions outside of class.",
-      "Received overwhelmingly positive performance reviews from students and faculty during end of semester surveys.",
+      "Fostered an engaging classroom environment by supplementing faculty instruction of two undergraduate computer science classes. Created passionate students excited about course material by periodically hosting study sessions throughout the semester, granting students a relaxing space to socialize with peers and work collaboratively.",
+      "Contributed to an improvement in course grades by providing substantial availability outside of class, tutoring students remotely or in person upon their request. Received overwhelmingly positive performance reviews from both students and faculty.",
     ],
   },
   {
