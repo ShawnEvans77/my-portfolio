@@ -36,7 +36,7 @@ const projects = [
 
 const experience = [
   {
-    role: "Java Tutor",
+    role: "Computer Science Tutor",
     org: "Brooklyn College",
     location: "Brooklyn, NY",
     period: "Sep 2025 - Present",
@@ -46,7 +46,7 @@ const experience = [
     ],
   },
   {
-    role: "Java Teaching Assistant",
+    role: "Computer Science Teaching Assistant",
     org: "Brooklyn College",
     location: "Brooklyn, NY",
     period: "Aug 2024 - May 2025",
@@ -471,7 +471,7 @@ export default function App() {
 
           <div style={{ position: "relative", opacity: loaded ? 1 : 0, transform: loaded ? "translateY(0)" : "translateY(24px)", transition: "opacity 0.9s ease 0.2s, transform 0.9s ease 0.2s", display: "flex", flexDirection: "column", alignItems: "center" }}>
             <p style={{ fontFamily: "'DM Mono', monospace", fontSize: "clamp(0.72rem, 1.8vw, 0.85rem)", letterSpacing: "0.2em", textTransform: "uppercase", color: "#c8b98a", marginBottom: "1.75rem" }}>
-              java tutor @ brooklyn college
+              cs tutor @ brooklyn college
             </p>
             <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(3.2rem, 9vw, 7.5rem)", fontWeight: 700, lineHeight: 0.95, letterSpacing: "-0.03em", color: "#f0ede6", marginBottom: "2.5rem" }}>
               Shawn<br /><span style={{ fontStyle: "italic", fontWeight: 400 }}>Anthony</span><br />Evans
