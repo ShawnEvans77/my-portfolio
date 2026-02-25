@@ -273,7 +273,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
                 paddingBottom: "1px",
               }}
             >
-              Live Platform
+              Website Link
             </a>
             <span style={{ color: "rgba(126,184,212,0.5)", fontSize: "0.8rem" }}>&#8594;</span>
           </div>
