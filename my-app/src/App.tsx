@@ -8,7 +8,7 @@ const projects = [
   {
     slug: "maple",
     title: "maple",
-    tech: ["React.js", "TailwindCSS", "TypeScript", "Vercel"],
+    tech: ["React.js", "TypeScript", "Vercel"],
     description: "Designed a platform for Brooklyn College Computer Science students that lets them access useful study materials easily without having to shift through dated materials.",
     url: "https://github.com/ShawnEvans77",
     liveUrl: "https://cisc-1115.vercel.app/",
@@ -83,7 +83,7 @@ const experience = [
 
 const skills = [
   { label: "Languages", items: ["C", "C++", "Java", "JavaScript", "TypeScript", "Python", "SQL"] },
-  { label: "Libraries",  items: ["React.js", "TailwindCSS", "Pandas", "PyPDF", "Pygame"] },
+  { label: "Libraries",  items: ["React.js", "Pandas", "PyPDF", "Pygame"] },
   { label: "Tools",      items: ["Docker", "Flask", "Git", "SQLite", "Render", "Vercel"] },
 ] as const;
 
