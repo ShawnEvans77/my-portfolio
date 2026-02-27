@@ -167,7 +167,6 @@ function ProjectCard({ project, index }: { project: typeof projects[number]; ind
       </div>
 
       <div className="card-links">
-        {/* Render Maple's Live Link first if available */}
         {"liveUrl" in project && project.liveUrl && (
           <div className="card-link-group">
             <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="card-link card-link--blue">
@@ -177,7 +176,6 @@ function ProjectCard({ project, index }: { project: typeof projects[number]; ind
           </div>
         )}
 
-        {/* Render Marnie's Discord Link second if available */}
         {"discordUrl" in project && project.discordUrl && (
           <div className="card-link-group">
             <a href={project.discordUrl} target="_blank" rel="noopener noreferrer" className="card-link card-link--teal">
@@ -187,7 +185,6 @@ function ProjectCard({ project, index }: { project: typeof projects[number]; ind
           </div>
         )}
 
-        {/* Render GitHub Link last */}
         <div className="card-link-group">
           <a href={project.url} target="_blank" rel="noopener noreferrer" className="card-link card-link--gold">
             View on GitHub
@@ -239,6 +236,7 @@ function ExperienceCard({ exp, index }: { exp: typeof experience[number]; index:
 
 export default function App() {
   const [loaded, setLoaded] = useState(false);
+  const { ref: eduRef,     visible: eduVisible     } = useInView();
   const { ref: expRef,     visible: expVisible     } = useInView();
   const { ref: contactRef, visible: contactVisible } = useInView();
 
@@ -263,7 +261,7 @@ export default function App() {
 
       <section className="hero">
         <div className="hero-grid-bg" />
-        <div className="hero-line hero-line--top"     style={{ height: loaded ? "80px" : "0" }} />
+        <div className="hero-line hero-line--top"    style={{ height: loaded ? "80px" : "0" }} />
         <div className="hero-line hero-line--bottom" style={{ height: loaded ? "80px" : "0" }} />
 
         <div className="hero-content" style={fadeIn(0.2)}>
@@ -300,7 +298,15 @@ export default function App() {
 
       <section className="section">
         <SectionHeader title="Education" />
-        <div className="card">
+        <div
+          ref={eduRef}
+          className="card"
+          style={{
+            opacity:   eduVisible ? 1 : 0,
+            transform: eduVisible ? "translateY(0)" : "translateY(32px)",
+            transition: "opacity 0.6s ease, transform 0.6s ease",
+          }}
+        >
           <div className="card-top-row" style={{ marginBottom: "0.6rem" }}>
             <h3 className="edu-name">
               Brooklyn <span className="edu-name-accent">College</span>
