@@ -8,7 +8,7 @@
 /* ── Design tokens ── */
 
 :root {
-  --bg:            #0d0c0b;
+  --bg:            #000000;
   --surface:       rgba(200, 185, 138, 0.025);
 
   --cream:         #f0ede6;
