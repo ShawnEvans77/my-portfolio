@@ -88,8 +88,8 @@ const skills = [
 ] as const;
 
 const courses = [
-  "Data Structures", "Algorithms", "Operating Systems", "Database Systems",
-  "Theoretical Computer Science", "Computer Architecture", "Discrete Mathematics",
+  "Data Structures", "Calculus", "Operating Systems", "Databases",
+  "Theoretical Computer Science",
 ];
 
 const activities = ["Black & Latino Male Initiative", "Computer Science Club"];
