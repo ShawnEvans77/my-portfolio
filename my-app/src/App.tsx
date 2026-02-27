@@ -9,7 +9,7 @@ const projects = [
     slug: "maple",
     title: "maple",
     tech: ["React.js", "TypeScript", "Vercel"],
-    description: "Built a website for Brooklyn College Computer Science students that lets them access modern study materials as opposed to dated ones. Cataloged several semesters worth of questions in one easy to navigate platform",
+    description: "Built a website for Brooklyn College Computer Science students that lets them access modern study materials as opposed to dated ones. Cataloged several semesters worth of questions in one easy to navigate platform.",
     url: "https://github.com/ShawnEvans77",
     liveUrl: "https://cisc-1115.vercel.app/",
     year: "2025",
