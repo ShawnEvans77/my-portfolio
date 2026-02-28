@@ -20,4 +20,12 @@ export const socialLinks = [
     bg:     "rgba(200,185,138,0.1)",
     border: "rgba(200,185,138,0.35)",
   },
+  {
+    label:  "Resume",
+    href:   "/Shawn_Evans_Resume.pdf",
+    target: "_blank",
+    color:  "#a8d4a8",
+    bg:     "rgba(168,212,168,0.1)",
+    border: "rgba(168,212,168,0.35)",
+  },
 ] as const;
