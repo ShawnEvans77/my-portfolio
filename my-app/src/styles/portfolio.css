@@ -109,7 +109,7 @@ body  {
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding: clamp(3rem, 6vw, 5rem) clamp(1.5rem, 6vw, 6rem) clamp(9rem, 18vw, 13rem);
+  padding: clamp(6rem, 12vw, 9rem) clamp(1.5rem, 6vw, 6rem);
   position: relative;
   overflow: hidden;
 }
