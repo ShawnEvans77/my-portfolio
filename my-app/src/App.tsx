@@ -18,7 +18,7 @@ const projects = [
   {
     slug: "marnie",
     title: "marnie",
-    tech: ["Python", "Docker", "Flask", "Pandas", "REST APIs", "Render"],
+    tech: ["Python", "Docker", "Flask", "Pandas", "REST APIs"],
     description: "A Discord bot that returns information about Pokemon, perpetually hosted on Render. Features fuzzy string matching for autocorrect support and Pandas dataframes for query authentication.",
     url: "https://github.com/ShawnEvans77/marnie-bot",
     discordUrl: "https://discord.com/oauth2/authorize?client_id=1455036822014001168&permissions=68608&integration_type=0&scope=bot",
@@ -28,7 +28,7 @@ const projects = [
   {
     slug: "socks",
     title: "socks",
-    tech: ["Python", "PyPDF", "SQL", "SQLite"],
+    tech: ["Python", "SQL", "SQLite"],
     description: "A Python CLI that generates tailored Brooklyn College tutor timesheets from user input. Backed by a SQLite database with a full CRUD interface for managing payroll information.",
     url: "https://github.com/ShawnEvans77/Socks",
     year: "2025",
@@ -83,8 +83,8 @@ const experience = [
 
 const skills = [
   { label: "Languages", items: ["C", "C++", "Java", "JavaScript", "TypeScript", "Python", "SQL"] },
-  { label: "Libraries",  items: ["React.js", "Pandas", "PyPDF", "Pygame"] },
-  { label: "Tools",      items: ["Docker", "Flask", "Git", "SQLite", "Render", "Vercel"] },
+  { label: "Libraries",  items: ["NumPy", "Pandas", "React.js"] },
+  { label: "Tools",      items: ["Docker", "Flask", "Git", "SQLite"] },
 ] as const;
 
 const courses = [
