@@ -84,7 +84,8 @@ const experience = [
 const skills = [
   { label: "Languages", items: ["C", "C++", "Java", "JavaScript", "TypeScript", "Python", "SQL"] },
   { label: "Libraries",  items: ["NumPy", "Pandas", "React.js"] },
-  { label: "Tools",      items: ["Docker", "Flask", "Git", "SQLite"] },
+  { label: "Frameworks",  items: ["Flask", "Pytest"] },
+  { label: "Tools",      items: ["Docker", "Git", "SQLite"] },
 ] as const;
 
 const courses = [
