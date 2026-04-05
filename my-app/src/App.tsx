@@ -18,7 +18,7 @@ const projects = [
   {
     slug: "marnie",
     title: "marnie",
-    tech: ["Python", "Docker", "Flask", "Pandas", "REST APIs"],
+    tech: ["Python", "Docker", "Flask", "Pandas", "Pytest"],
     description: "A Discord bot that returns information about Pokemon, perpetually hosted on Render. Features fuzzy string matching for autocorrect support and Pandas dataframes for query authentication.",
     url: "https://github.com/ShawnEvans77/marnie-bot",
     discordUrl: "https://discord.com/oauth2/authorize?client_id=1455036822014001168&permissions=68608&integration_type=0&scope=bot",
