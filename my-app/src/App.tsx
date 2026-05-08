@@ -4,37 +4,47 @@ import { socialLinks } from "./styles/portfolio-theme";
 
 // ── Data ─────────────────────────────────────────────────────────────────────
 
+type Project = {
+  slug: string;
+  title: string;
+  tech: readonly string[];
+  bullets: readonly string[];
+  url: string;
+  liveUrl?: string;
+  discordUrl?: string;
+  year: string;
+  tag: string;
+};
+
 const projects = [
   {
-    slug: "maple",
-    title: "maple",
-    tech: ["React.js", "TypeScript"],
-    description: "A website for Brooklyn College Computer Science students that lets them access modern study materials as opposed to dated ones. Cataloged several semesters worth of questions in one easy to navigate platform.",
-    url: "https://github.com/ShawnEvans77",
-    liveUrl: "https://cisc-1115.vercel.app/",
-    year: "2025",
-    tag: "Learning Platform",
-  },
-  {
-    slug: "marnie",
-    title: "marnie",
-    tech: ["Python", "Docker", "Flask", "Pandas", "Pytest"],
-    description: "A Discord bot that returns information about Pokemon, perpetually hosted on Render. Features fuzzy string matching for autocorrect support and Pandas dataframes for query authentication.",
+    slug: "discord-bot",
+    title: "Discord Bot",
+    tech: ["Docker", "Flask", "Pandas", "Pytest", "Python"],
+    bullets: [
+      "Designed and deployed a publicly installable Discord bot on Render that delivers real-time Pokemon data - stats, types, abilities, moves, and items - to an active community through a clean command interface.",
+      "Enforced query integrity by validating all inputs against Pandas dataframes before issuing PokeAPI calls, and implemented fuzzy string matching to handle misspelled names without surfacing errors to users.",
+      "Extended the bot with shiny and non-shiny sprite retrieval, randomized selection, server moderation utilities, and multi-language support configurable through a single constants file.",
+    ],
     url: "https://github.com/ShawnEvans77/marnie-bot",
     discordUrl: "https://discord.com/oauth2/authorize?client_id=1455036822014001168&permissions=68608&integration_type=0&scope=bot",
-    year: "2025",
+    year: "Dec. 2025 – Mar. 2026",
     tag: "Discord Bot",
   },
   {
-    slug: "socks",
-    title: "socks",
-    tech: ["Python", "SQL", "SQLite"],
-    description: "A Python CLI that generates tailored Brooklyn College tutor timesheets from user input. Backed by a SQLite database with a full CRUD interface for managing payroll information.",
+    slug: "timesheet-command-line-tool",
+    title: "Timesheet Command Line Tool",
+    tech: ["PyPDF", "Python", "SQL", "SQLite", "Unittest"],
+    bullets: [
+      "Automated Brooklyn College part-time timesheet generation from user input, producing correctly pre-filled, print-ready PDFs and eliminating a previously manual administrative process.",
+      "Implemented automatic pay period detection and missed-day tracking driven by per-employee JSON schedules, removing manual date lookups entirely.",
+      "Exposed a full CRUD interface for managing pay period and scheduling records without writing SQL, and validated all core database logic and class behavior with a dedicated unittest suite.",
+    ],
     url: "https://github.com/ShawnEvans77/Socks",
-    year: "2025",
-    tag: "CLI Tool",
+    year: "Nov. 2025 – Mar. 2026",
+    tag: "Command Line Tool",
   },
-] as const;
+] as const satisfies readonly Project[];
 
 const experience = [
   {
@@ -133,7 +143,7 @@ function SectionHeader({ title }: { title: string }) {
   );
 }
 
-function ProjectCard({ project, index }: { project: typeof projects[number]; index: number }) {
+function ProjectCard({ project, index }: { project: Project; index: number }) {
   const { ref, visible } = useInView();
 
   return (
@@ -149,7 +159,7 @@ function ProjectCard({ project, index }: { project: typeof projects[number]; ind
       <div className="card-top-row">
         <div className="card-title-group">
           <a
-            href={"liveUrl" in project ? project.liveUrl : project.url}
+            href={project.liveUrl ?? project.url}
             target="_blank"
             rel="noopener noreferrer"
             className="card-title"
@@ -161,14 +171,21 @@ function ProjectCard({ project, index }: { project: typeof projects[number]; ind
         <span className="card-year">{project.year}</span>
       </div>
 
-      <p className="card-body">{project.description}</p>
+      <div className="bullets">
+        {project.bullets.map((b, j) => (
+          <div key={j} className="bullet">
+            <span className="bullet-dash">&#8212;</span>
+            <p className="bullet-text">{b}</p>
+          </div>
+        ))}
+      </div>
 
       <div className="tag-group">
         {project.tech.map(t => <span key={t} className="tag">{t}</span>)}
       </div>
 
       <div className="card-links">
-        {"liveUrl" in project && project.liveUrl && (
+        {project.liveUrl && (
           <div className="card-link-group">
             <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="card-link card-link--blue">
               Website Link
@@ -177,7 +194,7 @@ function ProjectCard({ project, index }: { project: typeof projects[number]; ind
           </div>
         )}
 
-        {"discordUrl" in project && project.discordUrl && (
+        {project.discordUrl && (
           <div className="card-link-group">
             <a href={project.discordUrl} target="_blank" rel="noopener noreferrer" className="card-link card-link--teal">
               Add to Server
