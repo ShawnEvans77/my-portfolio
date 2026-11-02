@@ -44,6 +44,18 @@ const projects = [
     year: "Nov. 2025 – Mar. 2026",
     tag: "Command Line Tool",
   },
+  {
+    slug: "maple",
+    title: "Maple",
+    tech: ["React.js", "TypeScript"],
+    bullets: [
+      "Built a learning platform for Brooklyn College Computer Science students that brings modern study materials and several semesters of cataloged questions into one easy-to-navigate place.",
+    ],
+    url: "https://github.com/ShawnEvans77",
+    liveUrl: "https://cisc-1115.vercel.app/",
+    year: "2025",
+    tag: "Learning Platform",
+  },
 ] as const satisfies readonly Project[];
 
 const experience = [
