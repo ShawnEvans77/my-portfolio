@@ -19,12 +19,12 @@ type Project = {
 const projects = [
   {
     slug: "discord-bot",
-    title: "Discord Bot",
-    tech: ["Docker", "Flask", "Pandas", "Pytest", "Python"],
+    title: "Marnie, Discord Bot",
+    tech: ["Python", "discord.py", "PokeAPI", "Pandas", "Flask", "Render"],
     bullets: [
-      "Designed and deployed a publicly installable Discord bot on Render that delivers real-time Pokemon data - stats, types, abilities, moves, and items - to an active community through a clean command interface.",
-      "Enforced query integrity by validating all inputs against Pandas dataframes before issuing PokeAPI calls, and implemented fuzzy string matching to handle misspelled names without surfacing errors to users.",
-      "Extended the bot with shiny and non-shiny sprite retrieval, randomized selection, server moderation utilities, and multi-language support configurable through a single constants file.",
+      "Developed and deployed a Python Discord bot hosted 24/7 on Render for a 15-member community, with a Flask/Waitress health-check endpoint; members frequently use the !muted command to see who is currently timed out.",
+      "Built Pokemon lookup and type-matchup commands backed by PokeAPI and local CSV data with Pandas, using fuzzy matching to resolve misspellings and a type-effectiveness matrix for weaknesses, resistances, and immunities; wrote tests covering type-weakness output and PokeAPI lookup behavior.",
+      "Implemented a word-cloud command over up to 10,000 recent messages, with per-member filtering and a rolling per-channel cache warmed from channel history and updated incrementally; automated timeout moderation that announces timeouts and expirations, re-checks active timeouts on startup, and skips members who have left.",
     ],
     url: "https://github.com/ShawnEvans77/marnie-bot",
     discordUrl: "https://discord.com/oauth2/authorize?client_id=1455036822014001168&permissions=68608&integration_type=0&scope=bot",
@@ -33,12 +33,12 @@ const projects = [
   },
   {
     slug: "timesheet-command-line-tool",
-    title: "Timesheet Command Line Tool",
-    tech: ["PyPDF", "Python", "SQL", "SQLite", "Unittest"],
+    title: "Socks, Timesheet Command Line Tool",
+    tech: ["Python", "SQLite", "pypdf", "ReportLab", "unittest"],
     bullets: [
-      "Automated Brooklyn College part-time timesheet generation from user input, producing correctly pre-filled, print-ready PDFs and eliminating a previously manual administrative process.",
-      "Implemented automatic pay period detection and missed-day tracking driven by per-employee JSON schedules, removing manual date lookups entirely.",
-      "Exposed a full CRUD interface for managing pay period and scheduling records without writing SQL, and validated all core database logic and class behavior with a dedicated unittest suite.",
+      "Fully automated Brooklyn College part-time timesheet preparation: detects the current pay period, collects schedule exceptions for missed days, split shifts, and extra shifts, and generates a completed, flattened, print-ready PDF.",
+      "Designed a SQLite schema for employees, weekly schedules, pay periods, and due/pay dates, migrated schedules from JSON into it, and built CRUD workflows with split-shift support plus date, time, and overlap validation.",
+      "Filled and flattened PDF forms with pypdf, using ReportLab overlays for fields the form could not populate, and wrote a 45-test unittest suite covering CLI flows, database migrations, validation, and PDF output.",
     ],
     url: "https://github.com/ShawnEvans77/Socks",
     year: "Nov. 2025 – Mar. 2026",
@@ -105,9 +105,9 @@ const experience = [
 
 const skills = [
   { label: "Languages", items: ["C", "C++", "Java", "JavaScript", "TypeScript", "Python", "SQL"] },
-  { label: "Libraries",  items: ["NumPy", "Pandas", "React.js"] },
-  { label: "Frameworks",  items: ["Flask", "Pytest"] },
-  { label: "Tools",      items: ["Docker", "Git", "MongoDB", "SQLite"] },
+  { label: "AI-Assisted Development", items: ["Claude", "OpenAI Codex"] },
+  { label: "Libraries & Frameworks", items: ["Pandas", "NumPy", "React.js", "Flask", "discord.py", "pypdf", "ReportLab", "Pytest", "unittest"] },
+  { label: "Tools", items: ["Git", "Docker", "SQLite", "MongoDB", "Render", "REST APIs", "Microsoft Office", "Google Suite"] },
 ] as const;
 
 const courses = [
