@@ -52,7 +52,7 @@ const projects = [
   },
   {
     slug: "maple",
-    title: "Maple",
+    title: "Maple, CISC 1115 Learning Platform",
     tech: ["React.js", "TypeScript", "Vite", "Vitest", "KaTeX", "Vercel"],
     bullets: [
       "Built and deployed a study platform for Brooklyn College's intro Java course, turning 5 semesters of past final exams into 58 searchable practice questions, each with a worked solution and a step-by-step explanation.",
