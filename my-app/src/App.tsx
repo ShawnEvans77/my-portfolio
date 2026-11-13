@@ -20,29 +20,35 @@ const projects = [
   {
     slug: "discord-bot",
     title: "Marnie, Discord Bot",
-    tech: ["Python", "discord.py", "PokeAPI", "Pandas", "Flask", "Render"],
+    tech: ["Python", "discord.py", "PokeAPI", "pandas", "Pillow", "Flask", "Docker", "Render"],
     bullets: [
-      "Developed and deployed a Python Discord bot hosted 24/7 on Render for a 15-member community, with a Flask/Waitress health-check endpoint; members frequently use the !muted command to see who is currently timed out.",
-      "Built Pokemon lookup and type-matchup commands backed by PokeAPI and local CSV data with Pandas, using fuzzy matching to resolve misspellings and a type-effectiveness matrix for weaknesses, resistances, and immunities; wrote tests covering type-weakness output and PokeAPI lookup behavior.",
-      "Implemented a word-cloud command over up to 10,000 recent messages, with per-member filtering and a rolling per-channel cache warmed from channel history and updated incrementally; automated timeout moderation that announces timeouts and expirations, re-checks active timeouts on startup, and skips members who have left.",
+      "Built and deployed a Python Discord bot with 17 commands, hosted 24/7 on Render with a Flask/Waitress health-check endpoint and a Docker image. It serves a 15-member community, which uses !muted regularly to see who is timed out.",
+      "Split a single-file bot into discord.py cogs (Pokédex, chat stats, game, moderation, errors), with state kept on each cog. The pure logic sits in modules that can be tested without Discord, and about 100 pytest tests cover lookups, type matchups, embeds, word counts and game rounds.",
+      "Built Pokémon lookup commands on PokeAPI and local CSV data (pandas), using fuzzy matching (thefuzz) and an alias table to handle typos and nicknames. !dex is a rich embed showing artwork, base-stat bars, type weaknesses and immunities from a type-effectiveness matrix, abilities, and evolution line. If data is missing, that field is left out instead of crashing.",
+      "Moved blocking PokeAPI calls onto worker threads behind a shared HTTP session with a timeout and an automatic retry. This keeps the bot responsive while lookups run, and API failures become friendly messages for users.",
+      "Made “Who’s That Pokémon?”, a timed guessing game. It draws silhouettes from official artwork with Pillow and checks answers in a way that ignores forms, punctuation, aliases and small typos, while still rejecting guesses that name a different Pokémon.",
+      "Added word clouds (!wc) and top-chatter rankings (!top) over a shared cache of each channel’s last 10,000 messages. The cache fills in the background and stays correct as messages are sent, edited and deleted. The bot also announces timeouts automatically and re-checks active ones on startup.",
     ],
     url: "https://github.com/ShawnEvans77/marnie-bot",
     discordUrl: "https://discord.com/oauth2/authorize?client_id=1455036822014001168&permissions=68608&integration_type=0&scope=bot",
-    year: "Dec. 2025 – Mar. 2026",
+    year: "Dec. 2025 – Present",
     tag: "Discord Bot",
   },
   {
-    slug: "timesheet-command-line-tool",
-    title: "Socks, Timesheet Command Line Tool",
-    tech: ["Python", "SQLite", "pypdf", "ReportLab", "unittest"],
+    slug: "timesheet-generator",
+    title: "Socks, Timesheet Generator",
+    tech: ["Python", "Flask", "Jinja", "SQLite", "pypdf", "ReportLab", "unittest"],
     bullets: [
-      "Fully automated Brooklyn College part-time timesheet preparation: detects the current pay period, collects schedule exceptions for missed days, split shifts, and extra shifts, and generates a completed, flattened, print-ready PDF.",
-      "Designed a SQLite schema for employees, weekly schedules, pay periods, and due/pay dates, migrated schedules from JSON into it, and built CRUD workflows with split-shift support plus date, time, and overlap validation.",
-      "Filled and flattened PDF forms with pypdf, using ReportLab overlays for fields the form could not populate, and wrote a 45-test unittest suite covering CLI flows, database migrations, validation, and PDF output.",
+      "Automated Brooklyn College part-time timesheet preparation end to end: detects the current pay period, collects schedule exceptions (missed days, missed split shifts, extra shifts), and generates a filled, flattened, print-ready PDF with EMPLID, department number, and due/pay dates.",
+      "Designed a SQLite schema for employees, weekly split-shift schedules, pay periods, and holidays, with in-place migrations from legacy JSON and single-table schedules, deduplication, and unique constraints. Built CRUD workflows with date, time, and overlap validation.",
+      "Built a local Flask web front end alongside the CLI, sharing one data layer: a 3-step timesheet flow, employee/pay period/holiday management, and saved-PDF history. Used server-rendered Jinja and CSS-only interactivity, with no JavaScript framework.",
+      "Hardened the web app for local use: isolated per-request state instead of global caches, rejected non-localhost hosts and cross-origin POSTs, and limited file serving and deletion to the output folder to block path traversal.",
+      "Shipped a starter database with the academic-year calendar, copied on first run, so personal data never enters version control. Added one-click restore for accidentally deleted pay periods.",
+      "Filled and flattened PDF forms with pypdf, drawing ReportLab overlays for split-shift times the form couldn’t hold. Wrote an 81-test unittest suite covering CLI flows, migrations, validation, PDF output, and web routes.",
     ],
     url: "https://github.com/ShawnEvans77/Socks",
     year: "Nov. 2025 – Mar. 2026",
-    tag: "Command Line Tool",
+    tag: "Web App & CLI",
   },
   {
     slug: "maple",
@@ -104,9 +110,9 @@ const experience = [
 ] as const;
 
 const skills = [
-  { label: "Languages", items: ["C", "C++", "Java", "JavaScript", "TypeScript", "Python", "SQL"] },
-  { label: "AI-Assisted Development", items: ["Claude", "OpenAI Codex"] },
-  { label: "Libraries & Frameworks", items: ["Pandas", "NumPy", "React.js", "Flask", "discord.py", "pypdf", "ReportLab", "Pytest", "unittest"] },
+  { label: "Languages", items: ["Python", "Java", "JavaScript", "TypeScript", "C", "C++", "SQL"] },
+  { label: "AI-Assisted Development", items: ["Claude Code", "OpenAI Codex"] },
+  { label: "Libraries & Frameworks", items: ["pandas", "NumPy", "React.js", "Flask", "Jinja", "discord.py", "pypdf", "ReportLab", "Pytest", "unittest"] },
   { label: "Tools", items: ["Git", "Docker", "SQLite", "MongoDB", "Render", "REST APIs", "Microsoft Office", "Google Suite"] },
 ] as const;
 
