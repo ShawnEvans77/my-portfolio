@@ -53,9 +53,14 @@ const projects = [
   {
     slug: "maple",
     title: "Maple",
-    tech: ["React.js", "TypeScript"],
+    tech: ["React.js", "TypeScript", "Vite", "Vitest", "KaTeX", "Vercel"],
     bullets: [
-      "Built a learning platform for Brooklyn College Computer Science students that brings modern study materials and several semesters of cataloged questions into one easy-to-navigate place.",
+      "Built and deployed a study platform for Brooklyn College's intro Java course, turning 5 semesters of past final exams into 58 searchable practice questions, each with a worked solution and a step-by-step explanation.",
+      "Designed a typed content model and a custom markup format for writing questions, with a parser that renders highlighted Java, tables, and LaTeX math (KaTeX).",
+      "Wrote a lightweight Java syntax highlighter and an instant, in-browser search that searches across semesters, questions, topics, and prompt text and highlights matching snippets.",
+      "Added progress tracking saved in the browser (localStorage) that stays in sync across open tabs, with all / finished / unfinished filters and completion checkmarks for each semester. No backend needed.",
+      "Wrote automated tests (Vitest) that check every question, note, and exam PDF link for valid ids, complete fields, and well-formed markup, catching content mistakes before deploy.",
+      "Built a responsive, accessible interface with a light/dark theme that follows the system setting and loads without a flash of the wrong theme, plus a single breakpoint for phones.",
     ],
     url: "https://github.com/ShawnEvans77",
     liveUrl: "https://cisc-1115.vercel.app/",
