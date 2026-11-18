@@ -45,6 +45,8 @@ export const projects = [
     frameLabel: "marnie bot · discord",
     frameBg: "#1a1a1e",
     shots: [
+      { src: "/projects/marnie-dex.webp",    alt: "Marnie bot's !dex embed for Morpeko-Full-Belly with flavor text, types, abilities, base-stat bars and type matchups", caption: "!dex — full Pokédex entry", fit: "contain" },
+      { src: "/projects/marnie-fun.webp",    alt: "Marnie bot's help embed listing fun and server commands like !wtp, !pick, !wc, !top and !muted", caption: "fun & server commands", fit: "contain" },
       { src: "/projects/marnie-raichu.webp", alt: "Marnie bot replying to !shiny raichu alola with a shiny Alolan Raichu sprite", caption: "!shiny — sprite lookup", fit: "contain" },
       { src: "/projects/marnie-weak.webp",   alt: "Marnie bot listing Abomasnow's weaknesses, resistances and immunities", caption: "!weak — type matchups", fit: "contain" },
       { src: "/projects/marnie-dt.webp",     alt: "Marnie bot showing base stats and ability for Morpeko", caption: "!dt — base stats", fit: "contain" },
