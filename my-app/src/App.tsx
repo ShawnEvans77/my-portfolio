@@ -1,373 +1,158 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from "react";
+import { ArrowUp, ArrowUpRight, Check, Copy } from "lucide-react";
 import "./styles/portfolio.css";
-import { socialLinks } from "./styles/portfolio-theme";
+import {
+  activities, courses, email, experience, footerLinks, marqueeWords, navSections, projects, skills,
+} from "./data";
+import { useActiveSection, useCountUp, useInView, useNavHidden } from "./hooks";
+import { Hero } from "./components/Hero";
+import { ProjectShowcase } from "./components/ProjectShowcase";
+import { Timeline } from "./components/Timeline";
+import { Reveal, SectionHeader, SplitText } from "./components/Primitives";
 
-// ── Data ─────────────────────────────────────────────────────────────────────
-
-type Project = {
-  slug: string;
-  title: string;
-  tech: readonly string[];
-  bullets: readonly string[];
-  url: string;
-  liveUrl?: string;
-  discordUrl?: string;
-  year: string;
-  tag: string;
-};
-
-const projects = [
-  {
-    slug: "discord-bot",
-    title: "Marnie, Discord Bot",
-    tech: ["Python", "discord.py", "PokeAPI", "pandas", "Pillow", "Flask", "Docker", "Render"],
-    bullets: [
-      "Built and deployed a Python Discord bot with 17 commands, hosted 24/7 on Render with a Flask/Waitress health-check endpoint and a Docker image. It serves a 15-member community, which uses !muted regularly to see who is timed out.",
-      "Split a single-file bot into discord.py cogs (Pokédex, chat stats, game, moderation, errors), with state kept on each cog. The pure logic sits in modules that can be tested without Discord, and about 100 pytest tests cover lookups, type matchups, embeds, word counts and game rounds.",
-      "Built Pokémon lookup commands on PokeAPI and local CSV data (pandas), using fuzzy matching (thefuzz) and an alias table to handle typos and nicknames. !dex is a rich embed showing artwork, base-stat bars, type weaknesses and immunities from a type-effectiveness matrix, abilities, and evolution line. If data is missing, that field is left out instead of crashing.",
-      "Moved blocking PokeAPI calls onto worker threads behind a shared HTTP session with a timeout and an automatic retry. This keeps the bot responsive while lookups run, and API failures become friendly messages for users.",
-      "Made “Who’s That Pokémon?”, a timed guessing game. It draws silhouettes from official artwork with Pillow and checks answers in a way that ignores forms, punctuation, aliases and small typos, while still rejecting guesses that name a different Pokémon.",
-      "Added word clouds (!wc) and top-chatter rankings (!top) over a shared cache of each channel’s last 10,000 messages. The cache fills in the background and stays correct as messages are sent, edited and deleted. The bot also announces timeouts automatically and re-checks active ones on startup.",
-    ],
-    url: "https://github.com/ShawnEvans77/marnie-bot",
-    discordUrl: "https://discord.com/oauth2/authorize?client_id=1455036822014001168&permissions=68608&integration_type=0&scope=bot",
-    year: "Dec. 2025 – Present",
-    tag: "Discord Bot",
-  },
-  {
-    slug: "timesheet-generator",
-    title: "Socks, Timesheet Generator",
-    tech: ["Python", "Flask", "Jinja", "SQLite", "pypdf", "ReportLab", "unittest"],
-    bullets: [
-      "Automated Brooklyn College part-time timesheet preparation end to end: detects the current pay period, collects schedule exceptions (missed days, missed split shifts, extra shifts), and generates a filled, flattened, print-ready PDF with EMPLID, department number, and due/pay dates.",
-      "Designed a SQLite schema for employees, weekly split-shift schedules, pay periods, and holidays, with in-place migrations from legacy JSON and single-table schedules, deduplication, and unique constraints. Built CRUD workflows with date, time, and overlap validation.",
-      "Built a local Flask web front end alongside the CLI, sharing one data layer: a 3-step timesheet flow, employee/pay period/holiday management, and saved-PDF history. Used server-rendered Jinja and CSS-only interactivity, with no JavaScript framework.",
-      "Hardened the web app for local use: isolated per-request state instead of global caches, rejected non-localhost hosts and cross-origin POSTs, and limited file serving and deletion to the output folder to block path traversal.",
-      "Shipped a starter database with the academic-year calendar, copied on first run, so personal data never enters version control. Added one-click restore for accidentally deleted pay periods.",
-      "Filled and flattened PDF forms with pypdf, drawing ReportLab overlays for split-shift times the form couldn’t hold. Wrote an 81-test unittest suite covering CLI flows, migrations, validation, PDF output, and web routes.",
-    ],
-    url: "https://github.com/ShawnEvans77/Socks",
-    year: "Nov. 2025 – Mar. 2026",
-    tag: "Web App & CLI",
-  },
-  {
-    slug: "maple",
-    title: "Maple, CISC 1115 Learning Platform",
-    tech: ["React 19", "TypeScript", "Vite", "React Router 7", "Vitest", "KaTeX", "Vercel"],
-    bullets: [
-      "Built a static study site for an intro Java course (CISC 1115) covering 5 past final exams with about 60 worked questions and solutions, plus notes on 5 topics, with client-side search and per-question progress tracking.",
-      "Wrote 5 interactive learning tools: a step-through algorithm visualizer (binary and linear search, bubble and selection sort) that highlights the running line of Java, a binary/decimal/hex converter, a binary add/subtract calculator, a Java String method explorer and a printf playground.",
-      "Re-implemented Java's printf formatting and String methods in TypeScript, including Java's exact exception messages and half-up rounding, and verified them against output from real Java 25 runs.",
-      "Designed a small content markup language (code, monospace and table blocks with inline styles) and a Java syntax highlighter, so all content lives as typed TypeScript data with no backend or CMS.",
-      "Wrote 135 Vitest tests, including an exhaustive check of all 65,536 8-bit pairs for the binary calculator and content tests that validate ids, markup and PDF paths, so a content mistake fails the build.",
-      "Kept the tools and the written notes in sync through tests that fail when a worked example in a note stops matching what the tool produces.",
-      "Built about 20 reusable UI components and a hand-written CSS design system (about 2,600 lines) with design tokens, cascade layers, a flash-free dark mode and a mobile layout.",
-      "Persisted progress and theme in localStorage with cross-tab sync, and gated every change behind one lint, test and production build command.",
-    ],
-    url: "https://github.com/ShawnEvans77",
-    liveUrl: "https://cisc-1115.vercel.app/",
-    year: "2025",
-    tag: "Learning Platform",
-  },
-] as const satisfies readonly Project[];
-
-const experience = [
-  {
-    role: "Computer Science Tutor",
-    org: "Brooklyn College",
-    location: "Brooklyn, NY",
-    period: "Sep 2025 - Present",
-    bullets: [
-      "Enhanced students' understanding of Java concepts through creative tutoring sessions that focused on algorithmic thinking rather than rote syntax memorization.",
-      "Demystified common programming patterns using focused one-on-one guidance, robust whiteboard demonstrations, and informational lectures. Easily managed high attendance sessions by donating an equal amount of time to all students irregardless of their skill level.",
-    ],
-  },
-  {
-    role: "Computer Science Teaching Assistant",
-    org: "Brooklyn College",
-    location: "Brooklyn, NY",
-    period: "Aug 2024 - May 2025",
-    bullets: [
-      "Fostered an engaging classroom environment by supplementing faculty instruction of two undergraduate computer science classes. Created passionate students excited about course material by periodically hosting study sessions throughout the semester, granting students a relaxing space to socialize with peers and work collaboratively.",
-      "Contributed to an improvement in course grades by providing substantial availability outside of class, tutoring students remotely or in person upon their request. Received overwhelmingly positive performance reviews from both students and faculty.",
-    ],
-  },
-  {
-    role: "Peer Mentor",
-    org: "Brooklyn College",
-    location: "Brooklyn, NY",
-    period: "Aug 2024 - May 2025",
-    bullets: [
-      "Supported the mental, social, and academic well being of a cohort comprised of STEM students as part of a broader effort to improve CUNY graduation rates.",
-      "Provided mentees with much needed socialization during nightly online conversations and in-person study sessions, with talks ranging from academic struggles to personal life aspirations.",
-    ],
-  },
-  {
-    role: "Software Engineering Intern",
-    org: "Barclays",
-    location: "Whippany, NJ",
-    period: "Jan 2023",
-    bullets: [
-      "Engineered an enhancement to the Barclays development team's workflow alongside an agile team of four university students. Upgraded the proprietary Barclays code editor by writing a JavaScript algorithm that used regular expressions to detect erroneous function calls.",
-      "Decreased development time by automating the syntax validation portion of the debugging process, thereby allowing resources to be allotted elsewhere.",
-      "Successfully shipped the editor enhancement within a tight one-month deadline through careful time management, assistance of team members as necessary, and communication of project proposals during daily standup meetings.",
-      "Delivered an engaging, comprehensive oral presentation detailing the project's purpose, scope, implementation, and potential use cases to an audience of Barclays developers at the internship's conclusion.",
-    ],
-  },
-] as const;
-
-const skills = [
-  { label: "Languages", items: ["Python", "Java", "JavaScript", "TypeScript", "C", "C++", "SQL"] },
-  { label: "AI-Assisted Development", items: ["Claude Code", "OpenAI Codex"] },
-  { label: "Libraries & Frameworks", items: ["pandas", "NumPy", "React.js", "Flask", "Jinja", "discord.py", "pypdf", "ReportLab", "Pytest", "unittest"] },
-  { label: "Tools", items: ["Git", "Docker", "SQLite", "MongoDB", "Render", "REST APIs", "Microsoft Office", "Google Suite"] },
-] as const;
-
-const courses = [
-  "Data Structures", "Calculus", "Operating Systems", "Databases",
-  "Theoretical Computer Science",
-];
-
-const activities = ["Black & Latino Male Initiative", "Computer Science Club"];
-
-const footerLinks = [
-  { label: "GitHub",   href: "https://github.com/ShawnEvans77" },
-  { label: "LinkedIn", href: "https://linkedin.com/in/shawn85" },
-];
+const sectionIds = navSections.map(s => s.id);
 
 
-// ── Hooks ─────────────────────────────────────────────────────────────────────
+// ── Page chrome ───────────────────────────────────────────────────────────────
 
-function useInView(threshold = 0.1) {
+/** Gold bar across the top that tracks scroll position. */
+function ScrollProgress() {
   const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const p = max > 0 ? window.scrollY / max : 0;
+      ref.current?.style.setProperty("transform", `scaleX(${p})`);
+    };
+    const onScroll = () => { if (!raf) raf = requestAnimationFrame(update); };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      cancelAnimationFrame(raf);
+    };
+  }, []);
+
+  return <div ref={ref} className="scroll-progress" aria-hidden="true" />;
+}
+
+/** Soft gold light that trails the mouse (fine pointers only). */
+function CursorGlow() {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!window.matchMedia("(pointer: fine)").matches) return;
     const el = ref.current;
     if (!el) return;
-    const obs = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { setVisible(true); obs.disconnect(); } },
-      { threshold }
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, [threshold]);
+    const onMove = (e: globalThis.PointerEvent) => {
+      el.style.setProperty("--cx", `${e.clientX}px`);
+      el.style.setProperty("--cy", `${e.clientY}px`);
+      el.classList.add("is-on");
+    };
+    const onLeave = () => el.classList.remove("is-on");
+    window.addEventListener("pointermove", onMove, { passive: true });
+    document.documentElement.addEventListener("pointerleave", onLeave);
+    return () => {
+      window.removeEventListener("pointermove", onMove);
+      document.documentElement.removeEventListener("pointerleave", onLeave);
+    };
+  }, []);
 
-  return { ref, visible };
+  return <div ref={ref} className="cursor-glow" aria-hidden="true" />;
 }
 
-
-// ── Sub-components ────────────────────────────────────────────────────────────
-
-function SectionHeader({ title }: { title: string }) {
-  return (
-    <div className="section-header">
-      <h2 className="section-heading">{title}</h2>
-      <div className="section-heading-line" />
-    </div>
-  );
-}
-
-function ProjectCard({ project, index }: { project: Project; index: number }) {
-  const { ref, visible } = useInView();
-
-  return (
-    <div
-      ref={ref}
-      className="card"
-      style={{
-        opacity:   visible ? 1 : 0,
-        transform: visible ? "translateY(0)" : "translateY(32px)",
-        transition: `opacity 0.6s ease ${index * 0.12}s, transform 0.6s ease ${index * 0.12}s`,
-      }}
-    >
-      <div className="card-top-row">
-        <div className="card-title-group">
-          <a
-            href={project.liveUrl ?? project.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="card-title"
-          >
-            {project.title}
-          </a>
-          <span className="card-tag">{project.tag}</span>
-        </div>
-        <span className="card-year">{project.year}</span>
-      </div>
-
-      <div className="bullets">
-        {project.bullets.map((b, j) => (
-          <div key={j} className="bullet">
-            <span className="bullet-dash">&#8212;</span>
-            <p className="bullet-text">{b}</p>
-          </div>
-        ))}
-      </div>
-
-      <div className="tag-group">
-        {project.tech.map(t => <span key={t} className="tag">{t}</span>)}
-      </div>
-
-      <div className="card-links">
-        {project.liveUrl && (
-          <div className="card-link-group">
-            <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="card-link card-link--blue">
-              Website Link
-            </a>
-            <span className="card-link-arrow card-link-arrow--blue">→</span>
-          </div>
-        )}
-
-        {project.discordUrl && (
-          <div className="card-link-group">
-            <a href={project.discordUrl} target="_blank" rel="noopener noreferrer" className="card-link card-link--teal">
-              Add to Server
-            </a>
-            <span className="card-link-arrow card-link-arrow--teal">→</span>
-          </div>
-        )}
-
-        <div className="card-link-group">
-          <a href={project.url} target="_blank" rel="noopener noreferrer" className="card-link card-link--gold">
-            View on GitHub
-          </a>
-          <span className="card-link-arrow card-link-arrow--gold">→</span>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function ExperienceCard({ exp, index }: { exp: typeof experience[number]; index: number }) {
-  const { ref, visible } = useInView();
-
-  return (
-    <div
-      ref={ref}
-      className="card"
-      style={{
-        opacity:   visible ? 1 : 0,
-        transform: visible ? "translateY(0)" : "translateY(32px)",
-        transition: `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`,
-      }}
-    >
-      <div className="card-top-row">
-        <h3 className="card-title">{exp.role}</h3>
-        <span className="card-period">{exp.period}</span>
-      </div>
-
-      <div className="bullets">
-        {exp.bullets.map((b, j) => (
-          <div key={j} className="bullet">
-            <span className="bullet-dash">&#8212;</span>
-            <p className="bullet-text">{b}</p>
-          </div>
-        ))}
-      </div>
-
-      <div className="tag-group">
-        <span className="tag tag--gold">{exp.org}</span>
-        <span className="tag tag--faint">{exp.location}</span>
-      </div>
-    </div>
-  );
-}
-
-
-// ── App ───────────────────────────────────────────────────────────────────────
-
-export default function App() {
+function Nav() {
+  const active = useActiveSection(sectionIds);
+  const hidden = useNavHidden();
   const [loaded, setLoaded] = useState(false);
-  const { ref: eduRef,     visible: eduVisible     } = useInView();
-  const { ref: expRef,     visible: expVisible     } = useInView();
-  const { ref: contactRef, visible: contactVisible } = useInView();
 
   useEffect(() => {
     const t = setTimeout(() => setLoaded(true), 80);
     return () => clearTimeout(t);
   }, []);
 
-  const fadeIn = (delay = 0) => ({
-    opacity:    loaded ? 1 : 0,
-    transform:  loaded ? "translateY(0)" : "translateY(24px)",
-    transition: `opacity 0.9s ease ${delay}s, transform 0.9s ease ${delay}s`,
-  });
+  return (
+    <nav className={`nav${hidden ? " is-hidden" : ""}${loaded ? " is-loaded" : ""}`}>
+      <a href="#top" className="nav-name">Shawn Evans</a>
+      <div className="nav-links">
+        {navSections.map((s, i) => (
+          <a
+            key={s.id}
+            href={`#${s.id}`}
+            className={`nav-link${active === s.id ? " is-active" : ""}`}
+            aria-current={active === s.id ? "true" : undefined}
+          >
+            <span className="nav-link-num">0{i + 1}</span>
+            {s.label}
+          </a>
+        ))}
+      </div>
+      <a href={`mailto:${email}`} className="nav-contact">Contact</a>
+    </nav>
+  );
+}
+
+function Marquee() {
+  const row = (hidden: boolean) => (
+    <div className="marquee-row" aria-hidden={hidden || undefined}>
+      {marqueeWords.map((w, i) => (
+        <span key={w} className="marquee-item">
+          <span className={i % 2 ? "marquee-word marquee-word--outline" : "marquee-word"}>{w}</span>
+          <span className="marquee-star" aria-hidden="true">✦</span>
+        </span>
+      ))}
+    </div>
+  );
 
   return (
-    <div className="portfolio-root">
+    <div className="marquee" role="presentation">
+      <div className="marquee-track">
+        {row(true)}
+        {row(true)}
+      </div>
+    </div>
+  );
+}
 
-      <nav className="nav" style={{ opacity: loaded ? 1 : 0, transition: "opacity 0.6s ease" }}>
-        <span className="nav-name">Shawn Evans</span>
-        <a href="mailto:shawnevans328@gmail.com" className="nav-contact">Contact</a>
-      </nav>
 
-      <section className="hero">
-        <div className="hero-grid-bg" />
-        <div className="hero-line hero-line--top"    style={{ height: loaded ? "80px" : "0" }} />
-        <div className="hero-line hero-line--bottom" style={{ height: loaded ? "80px" : "0" }} />
+// ── Sections ──────────────────────────────────────────────────────────────────
 
-        <div className="hero-content" style={fadeIn(0.2)}>
-          <p className="hero-eyebrow">cs tutor @ brooklyn college</p>
-          <h1 className="hero-name">
-            Shawn<br />
-            <span className="hero-name-italic">Anthony</span><br />
-            Evans
-          </h1>
-          <p className="hero-bio">
-            Recent computer science graduate passionate about educating the next generation of engineers.
-            Proven track record of helping students succeed academically.
-          </p>
-          <div className="social-links">
-            {socialLinks.map(link => (
-              <a
-                key={link.label}
-                href={link.href}
-                target={"target" in link ? link.target : link.href.startsWith("http") ? "_blank" : undefined}
-                rel="noopener noreferrer"
-                className="social-link"
-                style={{
-                  "--link-color":  link.color,
-                  "--link-bg":     link.bg,
-                  "--link-border": link.border,
-                } as React.CSSProperties}
-              >
-                {link.label}
-              </a>
-            ))}
+function Education() {
+  const { ref, visible } = useInView<HTMLDivElement>(0.3);
+  const gpa = useCountUp(3.486, visible, 3);
+
+  return (
+    <section id="education" className="section">
+      <SectionHeader index="01" title="Education" />
+
+      <div ref={ref} className={`edu${visible ? " is-visible" : ""}`}>
+        <div className="edu-main">
+          <span className="card-period">Aug 2021 – May 2025</span>
+          <h3 className="edu-name">
+            Brooklyn <span className="edu-name-accent">College</span>
+          </h3>
+          <p className="edu-degree">Bachelor of Science in Computer Science</p>
+          <div className="edu-gpa-group">
+            <span className="edu-gpa" aria-label="GPA 3.486">{gpa}</span>
+            <span className="edu-gpa-label">GPA</span>
+          </div>
+          <div className="tag-group">
+            <span className="tag tag--gold">Brooklyn College</span>
+            <span className="tag tag--faint">Brooklyn, NY</span>
           </div>
         </div>
-      </section>
 
-      <section className="section">
-        <SectionHeader title="Education" />
-        <div
-          ref={eduRef}
-          className="card"
-          style={{
-            opacity:   eduVisible ? 1 : 0,
-            transform: eduVisible ? "translateY(0)" : "translateY(32px)",
-            transition: "opacity 0.6s ease, transform 0.6s ease",
-          }}
-        >
-          <div className="card-top-row" style={{ marginBottom: "0.6rem" }}>
-            <h3 className="edu-name">
-              Brooklyn <span className="edu-name-accent">College</span>
-            </h3>
-            <span className="card-period">Aug 2021 – May 2025</span>
-          </div>
-
-          <div className="edu-meta-row">
-            <p className="edu-degree">Bachelor of Science in Computer Science</p>
-            <div className="edu-gpa-group">
-              <span className="edu-gpa-label">GPA</span>
-              <span className="edu-gpa">3.486</span>
-            </div>
-          </div>
-
+        <div className="edu-side">
           <p className="edu-section-label">Relevant Coursework</p>
-          <div className="tag-group" style={{ marginBottom: "2rem" }}>
-            {courses.map(c => <span key={c} className="tag">{c}</span>)}
+          <div className="tag-group tag-group--stagger edu-courses">
+            {courses.map((c, i) => (
+              <span key={c} className="tag" style={{ "--i": i } as CSSProperties}>{c}</span>
+            ))}
           </div>
 
           <p className="edu-section-label">Activities</p>
@@ -379,76 +164,122 @@ export default function App() {
               </div>
             ))}
           </div>
-
-          <div className="tag-group">
-            <span className="tag tag--gold">Brooklyn College</span>
-            <span className="tag tag--faint">Brooklyn, NY</span>
-          </div>
         </div>
-        <div className="card-divider" />
-      </section>
+      </div>
+    </section>
+  );
+}
 
-      <section className="section">
-        <SectionHeader title="Projects" />
-        {projects.map((project, i) => (
-          <ProjectCard key={project.slug} project={project} index={i} />
-        ))}
-      </section>
+function SkillCard({ group, index }: { group: typeof skills[number]; index: number }) {
+  const onMove = (e: PointerEvent<HTMLDivElement>) => {
+    const r = e.currentTarget.getBoundingClientRect();
+    e.currentTarget.style.setProperty("--sx", `${e.clientX - r.left}px`);
+    e.currentTarget.style.setProperty("--sy", `${e.clientY - r.top}px`);
+  };
 
-      <section
-        ref={expRef}
-        className="section"
-        style={{
-          opacity:   expVisible ? 1 : 0,
-          transform: expVisible ? "translateY(0)" : "translateY(28px)",
-          transition: "opacity 0.7s ease, transform 0.7s ease",
-        }}
-      >
-        <SectionHeader title="Experience" />
-        {experience.map((e, i) => <ExperienceCard key={i} exp={e} index={i} />)}
-        <div className="card-divider" />
-      </section>
-
-      <section className="section section--skills">
-        <div className="skills-grid">
-          {skills.map(group => (
-            <div key={group.label} className="skill-group">
-              <p className="skill-group-label">{group.label}</p>
-              <div className="skill-items">
-                {group.items.map(item => <span key={item} className="skill-item">{item}</span>)}
-              </div>
-            </div>
+  return (
+    <Reveal delay={index * 0.08} className="skill-card-wrap">
+      <div className="skill-card" onPointerMove={onMove}>
+        <p className="skill-group-label">{group.label}</p>
+        <div className="skill-items tag-group--stagger">
+          {group.items.map((item, i) => (
+            <span key={item} className="skill-item" style={{ "--i": i } as CSSProperties}>{item}</span>
           ))}
         </div>
-      </section>
+      </div>
+    </Reveal>
+  );
+}
 
-      <footer
-        ref={contactRef}
-        className="footer"
-        style={{
-          opacity:   contactVisible ? 1 : 0,
-          transform: contactVisible ? "translateY(0)" : "translateY(24px)",
-          transition: "opacity 0.7s ease, transform 0.7s ease",
-        }}
-      >
-        <p className="footer-eyebrow">Get in Touch</p>
-        <h2 className="footer-heading">
-          Let's work<br />
-          <span className="footer-heading-italic">together.</span>
-        </h2>
-        <span className="footer-email">shawnevans328@gmail.com</span>
-        <div className="footer-bottom">
-          <span className="footer-copy">Shawn Anthony Evans, 2026</span>
-          <div className="footer-links">
-            {footerLinks.map(l => (
-              <a key={l.label} href={l.href} target="_blank" rel="noopener noreferrer" className="footer-link">
-                {l.label}
-              </a>
-            ))}
-          </div>
+function Footer() {
+  const { ref, visible } = useInView<HTMLElement>(0.25);
+  const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    if (!copied) return;
+    const t = setTimeout(() => setCopied(false), 2000);
+    return () => clearTimeout(t);
+  }, [copied]);
+
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(email);
+      setCopied(true);
+    } catch {
+      window.location.href = `mailto:${email}`;
+    }
+  };
+
+  return (
+    <footer id="contact" ref={ref} className={`footer${visible ? " is-visible" : ""}`}>
+      <p className="footer-eyebrow">Get in Touch</p>
+      <h2 className="footer-heading" aria-label="Let's work together.">
+        <SplitText text="Let's work" active={visible} stagger={0.035} />
+        <SplitText text="together." active={visible} delay={0.35} stagger={0.045} className="footer-heading-italic" />
+      </h2>
+
+      <div className="footer-actions">
+        <a href={`mailto:${email}`} className="footer-email">
+          <span>{email}</span>
+          <ArrowUpRight size={16} strokeWidth={1.5} aria-hidden="true" />
+        </a>
+        <button type="button" className={`footer-copy-btn${copied ? " is-copied" : ""}`} onClick={copy}>
+          {copied ? <Check size={15} strokeWidth={1.8} aria-hidden="true" /> : <Copy size={15} strokeWidth={1.6} aria-hidden="true" />}
+          <span aria-live="polite">{copied ? "Copied" : "Copy email"}</span>
+        </button>
+      </div>
+
+      <div className="footer-bottom">
+        <span className="footer-copy">Shawn Anthony Evans, 2026</span>
+        <div className="footer-links">
+          {footerLinks.map(l => (
+            <a key={l.label} href={l.href} target="_blank" rel="noopener noreferrer" className="footer-link">
+              {l.label}
+            </a>
+          ))}
+          <a href="#top" className="footer-link footer-top">
+            Back to top <ArrowUp size={12} strokeWidth={1.6} aria-hidden="true" />
+          </a>
         </div>
-      </footer>
+      </div>
+    </footer>
+  );
+}
 
+
+// ── App ───────────────────────────────────────────────────────────────────────
+
+export default function App() {
+  return (
+    <div id="top" className="portfolio-root">
+      <ScrollProgress />
+      <CursorGlow />
+      <Nav />
+
+      <main>
+        <Hero />
+        <Marquee />
+        <Education />
+
+        <section id="projects" className="section">
+          <SectionHeader index="02" title="Projects" />
+          <ProjectShowcase projects={projects} />
+        </section>
+
+        <section id="experience" className="section">
+          <SectionHeader index="03" title="Experience" />
+          <Timeline items={experience} />
+        </section>
+
+        <section id="skills" className="section section--skills">
+          <SectionHeader index="04" title="Skills" />
+          <div className="skills-grid">
+            {skills.map((group, i) => <SkillCard key={group.label} group={group} index={i} />)}
+          </div>
+        </section>
+      </main>
+
+      <Footer />
     </div>
   );
 }
