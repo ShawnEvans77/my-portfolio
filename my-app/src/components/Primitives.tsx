@@ -48,11 +48,10 @@ export function SplitText({ text, className = "", delay = 0, stagger = 0.035, ac
   );
 }
 
-export function SectionHeader({ index, title }: { index: string; title: string }) {
+export function SectionHeader({ title }: { title: string }) {
   const { ref, visible } = useInView<HTMLDivElement>(0.4);
   return (
     <div ref={ref} className={`section-header${visible ? " is-visible" : ""}`}>
-      <span className="section-index">{index}</span>
       <h2 className="section-heading" aria-label={title}>
         <SplitText text={title} active={visible} stagger={0.03} />
       </h2>

@@ -87,7 +87,6 @@ export function Hero() {
       </div>
 
       <a href="#education" className="hero-scroll" aria-label="Scroll to content">
-        <span className="hero-scroll-label">scroll</span>
         <span className="hero-scroll-track"><span className="hero-scroll-dot" /></span>
         <ArrowDown size={14} strokeWidth={1.5} aria-hidden="true" />
       </a>

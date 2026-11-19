@@ -150,7 +150,6 @@ function Bullets({ bullets }: { bullets: readonly string[] }) {
 }
 
 function ProjectRow({ project, index }: { project: Project; index: number }) {
-  const num = String(index + 1).padStart(2, "0");
   const flip = index % 2 === 1;
 
   return (
@@ -162,7 +161,6 @@ function ProjectRow({ project, index }: { project: Project; index: number }) {
       <div className="project-body">
         <Reveal>
           <div className="project-meta">
-            <span className="project-num">{num}</span>
             <span className="card-tag">{project.tag}</span>
             <span className="card-year">{project.year}</span>
           </div>
@@ -189,12 +187,12 @@ function ProjectRow({ project, index }: { project: Project; index: number }) {
           <div className="card-links">
             {project.liveUrl && (
               <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="pill-link pill-link--blue">
-                Website Link <ArrowUpRight size={14} strokeWidth={1.6} aria-hidden="true" />
+                Website <ArrowUpRight size={14} strokeWidth={1.6} aria-hidden="true" />
               </a>
             )}
             {project.discordUrl && (
               <a href={project.discordUrl} target="_blank" rel="noopener noreferrer" className="pill-link pill-link--teal">
-                Add to Server <ArrowUpRight size={14} strokeWidth={1.6} aria-hidden="true" />
+                Add to server <ArrowUpRight size={14} strokeWidth={1.6} aria-hidden="true" />
               </a>
             )}
             <a href={project.url} target="_blank" rel="noopener noreferrer" className="pill-link pill-link--gold">

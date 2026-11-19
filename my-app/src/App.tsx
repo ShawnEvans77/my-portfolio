@@ -80,14 +80,13 @@ function Nav() {
     <nav className={`nav${hidden ? " is-hidden" : ""}${loaded ? " is-loaded" : ""}`}>
       <a href="#top" className="nav-name">Shawn Evans</a>
       <div className="nav-links">
-        {navSections.map((s, i) => (
+        {navSections.map(s => (
           <a
             key={s.id}
             href={`#${s.id}`}
             className={`nav-link${active === s.id ? " is-active" : ""}`}
             aria-current={active === s.id ? "true" : undefined}
           >
-            <span className="nav-link-num">0{i + 1}</span>
             {s.label}
           </a>
         ))}
@@ -128,7 +127,7 @@ function Education() {
 
   return (
     <section id="education" className="section">
-      <SectionHeader index="01" title="Education" />
+      <SectionHeader title="Education" />
 
       <div ref={ref} className={`edu${visible ? " is-visible" : ""}`}>
         <div className="edu-main">
@@ -141,14 +140,11 @@ function Education() {
             <span className="edu-gpa" aria-label="GPA 3.486">{gpa}</span>
             <span className="edu-gpa-label">GPA</span>
           </div>
-          <div className="tag-group">
-            <span className="tag tag--gold">Brooklyn College</span>
-            <span className="tag tag--faint">Brooklyn, NY</span>
-          </div>
+          <span className="tag tag--faint">Brooklyn, NY</span>
         </div>
 
         <div className="edu-side">
-          <p className="edu-section-label">Relevant Coursework</p>
+          <p className="edu-section-label">Relevant coursework</p>
           <div className="tag-group tag-group--stagger edu-courses">
             {courses.map((c, i) => (
               <span key={c} className="tag" style={{ "--i": i } as CSSProperties}>{c}</span>
@@ -212,7 +208,6 @@ function Footer() {
 
   return (
     <footer id="contact" ref={ref} className={`footer${visible ? " is-visible" : ""}`}>
-      <p className="footer-eyebrow">Get in Touch</p>
       <h2 className="footer-heading" aria-label="Let's work together.">
         <SplitText text="Let's work" active={visible} stagger={0.035} />
         <SplitText text="together." active={visible} delay={0.35} stagger={0.045} className="footer-heading-italic" />
@@ -262,17 +257,17 @@ export default function App() {
         <Education />
 
         <section id="projects" className="section">
-          <SectionHeader index="02" title="Projects" />
+          <SectionHeader title="Projects" />
           <ProjectShowcase projects={projects} />
         </section>
 
         <section id="experience" className="section">
-          <SectionHeader index="03" title="Experience" />
+          <SectionHeader title="Experience" />
           <Timeline items={experience} />
         </section>
 
         <section id="skills" className="section section--skills">
-          <SectionHeader index="04" title="Skills" />
+          <SectionHeader title="Skills" />
           <div className="skills-grid">
             {skills.map((group, i) => <SkillCard key={group.label} group={group} index={i} />)}
           </div>
