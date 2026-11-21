@@ -39,7 +39,7 @@ export const projects = [
     bullets: [
       "Wrote Python scrapers (requests, BeautifulSoup, pypdf) that turned brooklyn.edu program pages, 19 bulletin PDFs and 91 syllabi into 13 normalized Snowflake tables: 172 courses and 372 prerequisite edges.",
       "Parsed the and/or logic in prerequisite rules (“MATH 1011 or MATH 1006 and 1201”) so the React Flow degree map shows which courses a student can actually take next, with credit progress saved per student.",
-      "Built the Discover chat, where a student describes their interests. Cortex Search and live AI ranking pick matching courses and careers, served by a Go API to the React frontend.",
+      "Built the Discover chatbot, which recommends courses from a student's interests. Cortex Search finds matches, and live AI ranking explains each pick in one sentence. A Go API serves it to the React frontend.",
       "Ran Cortex AI over every course with a JSON schema, generating its skills, career paths and free resources as structured data instead of free text.",
       "Pulled ratings for 115 professors from Rate My Professors' GraphQL endpoint, cached to keep requests to a minimum.",
     ],
@@ -158,7 +158,7 @@ export const experience = [
     bullets: [
       "Supported 60+ undergraduates across two Java courses by supplementing faculty instruction with hands-on lab assistance, improving student performance and course grades.",
       "Led in-person and virtual study sessions, live coding and guiding students through Java programming problems. Remained available outside class and earned 99% positive end-of-semester evaluations.",
-      "Advised students on responsible LLM usage, emphasizing critical evaluation of AI output so it remains a tool rather than a crutch for learning.",
+      "Advised students on responsible LLM usage, emphasizing critical evaluation of AI output so it remains a tool rather than a crutch. Encouraged building fundamentals before leaning on AI tools.",
     ],
   },
   {
