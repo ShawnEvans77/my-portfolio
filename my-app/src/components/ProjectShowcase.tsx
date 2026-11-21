@@ -163,6 +163,7 @@ function ProjectRow({ project, index }: { project: Project; index: number }) {
           <div className="project-meta">
             <span className="card-tag">{project.tag}</span>
             <span className="card-year">{project.year}</span>
+            {project.award && <span className="card-award">{project.award}</span>}
           </div>
           <h3 className="project-title-wrap">
             <a href={project.liveUrl ?? project.url} target="_blank" rel="noopener noreferrer" className="card-title">
@@ -172,6 +173,7 @@ function ProjectRow({ project, index }: { project: Project; index: number }) {
         </Reveal>
 
         <Reveal delay={0.1}>
+          {project.summary && <p className="project-summary">{project.summary}</p>}
           <Bullets bullets={project.bullets} />
         </Reveal>
 

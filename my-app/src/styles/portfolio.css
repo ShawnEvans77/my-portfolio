@@ -943,6 +943,26 @@ a.card-title:hover::after {
   margin-bottom: 1rem;
 }
 
+.card-award {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid var(--border-gold);
+  background: var(--gold-glow);
+  border-radius: 999px;
+  padding: 0.3rem 0.75rem;
+}
+
+.project-summary {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.6vw, 1.06rem);
+  line-height: 1.8;
+  color: var(--cream);
+  margin-bottom: 1.5rem;
+}
+
 .project-title-wrap {
   font-weight: inherit;
   margin-bottom: 1.6rem;

@@ -13,6 +13,10 @@ export type Project = {
   slug: string;
   title: string;
   tech: readonly string[];
+  /** Prize or recognition, shown as a badge above the title. */
+  award?: string;
+  /** One-paragraph overview shown above the bullets. */
+  summary?: string;
   bullets: readonly string[];
   url: string;
   liveUrl?: string;
@@ -26,6 +30,34 @@ export type Project = {
 };
 
 export const projects = [
+  {
+    slug: "future-study",
+    title: "Future-Study",
+    tech: ["Python", "React", "TypeScript", "Snowflake Cortex AI", "Go"],
+    award: "Winner, Best Use of Snowflake (MLH), Brooklyn Hackday 2026",
+    summary: "Built with a team of three, Future-Study maps Brooklyn College Computer and Information Science courses to career paths and free learning resources. It won MLH's Best Use of Snowflake prize for running its course data and AI recommendations on Snowflake Cortex.",
+    bullets: [
+      "Built Python scrapers (requests, BeautifulSoup, pypdf) that turned brooklyn.edu program pages, 19 bulletin PDFs, 91 syllabi and degree maps into 13 normalized tables ready for Snowflake, including 172 courses and 372 prerequisite edges.",
+      "Designed the app's main feature, an interactive degree map for the BS in Computer Science (React Flow, React 19, TypeScript). It shows prerequisite chains, tracks credit progress and saves each student's completed courses.",
+      "Rebuilt the Discover page as a chat-style course finder. Students describe their interests, and Snowflake Cortex AI returns matching courses and careers in real time.",
+      "Captured the and/or logic in prerequisite rules (for example, “MATH 1011 or MATH 1006 and 1201”) so the map and graph show which courses a student is actually eligible for, not just a list of linked courses.",
+      "Pulled Rate My Professors ratings for 115 professors from its GraphQL endpoint, with caching to keep requests to a minimum.",
+      "Led the frontend design (Tailwind CSS 4, dark mode, accessibility) and wrote the project's technical docs and README.",
+    ],
+    url: "https://github.com/kfranklyn7/Future-Study",
+    year: "2026",
+    tag: "Hackathon · Brooklyn College",
+    frameLabel: "futurestudy · course map",
+    frameBg: "#faf8f3",
+    shots: [
+      { src: "/projects/futurestudy-course-map.webp",        alt: "Future-Study course map home page with the progress card, legend and the start of the CS degree map", caption: "interactive degree map" },
+      { src: "/projects/futurestudy-course-drawer.webp",     alt: "Course map with Data Structures selected, its prerequisite path highlighted and a drawer showing the course's prerequisite rule and career paths", caption: "prerequisite chains & course drawer" },
+      { src: "/projects/futurestudy-discover-results.webp",  alt: "Discover chat recommending Computer Graphics, Game Programming and Game Design for a student who wants to build games", caption: "Discover: Cortex AI course finder" },
+      { src: "/projects/futurestudy-graph.webp",             alt: "Prerequisite graph for the Computer Science B.S.", caption: "prerequisite graph" },
+      { src: "/projects/futurestudy-course-detail.webp",     alt: "CISC 3130 Data Structures course page with description, prerequisite rule, career paths and free resources", caption: "course page: careers & free resources" },
+      { src: "/projects/futurestudy-map-dark.webp",          alt: "Future-Study course map in dark mode", caption: "dark mode" },
+    ],
+  },
   {
     slug: "discord-bot",
     title: "Marnie, Discord Bot",
