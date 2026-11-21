@@ -163,7 +163,15 @@ function ProjectRow({ project, index }: { project: Project; index: number }) {
           <div className="project-meta">
             <span className="card-tag">{project.tag}</span>
             <span className="card-year">{project.year}</span>
-            {project.award && <span className="card-award">{project.award}</span>}
+            {project.award && (
+              <span className="card-award">
+                <span className="card-award-icon" aria-hidden="true">🏆</span>
+                <span className="card-award-text">
+                  <strong className="card-award-label">Winner</strong>
+                  <span>{project.award}</span>
+                </span>
+              </span>
+            )}
           </div>
           <h3 className="project-title-wrap">
             <a href={project.liveUrl ?? project.url} target="_blank" rel="noopener noreferrer" className="card-title">
