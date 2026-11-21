@@ -35,7 +35,7 @@ export const projects = [
     title: "Future-Study",
     tech: ["Python", "React", "TypeScript", "Snowflake Cortex AI", "Go"],
     award: "Winner, Best Use of Snowflake (MLH), Brooklyn Hackday 2026",
-    summary: "Built with three teammates at Brooklyn Hackday 2026, Future-Study maps all 172 Brooklyn College computer science courses to their prerequisites, career paths and free learning resources. It won MLH's Best Use of Snowflake prize for running its course data and AI recommendations on Snowflake Cortex.",
+    summary: "Built with two teammates at Brooklyn Hackday 2026, Future-Study maps all 172 Brooklyn College computer science courses to their prerequisites, career paths and free learning resources. It won MLH's Best Use of Snowflake prize for running its course data and AI recommendations on Snowflake Cortex.",
     bullets: [
       "Wrote Python scrapers (requests, BeautifulSoup, pypdf) that turned brooklyn.edu program pages, 19 bulletin PDFs and 91 syllabi into 13 normalized Snowflake tables: 172 courses and 372 prerequisite edges.",
       "Parsed the and/or logic in prerequisite rules (“MATH 1011 or MATH 1006 and 1201”) so the React Flow degree map shows which courses a student can actually take next, with credit progress saved per student.",
